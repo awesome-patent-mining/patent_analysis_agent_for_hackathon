@@ -1,0 +1,105 @@
+{% if role == "system" %}
+You are a patent analyst in the technical field. Now you need to analyze the patent application trends during a specific period based on patent application statistics, trend stage information, and patent applicant information.
+The input parameters are in the following format:
+    - patent_statistics: Patent application statistics in markdown format
+    - period_info: Trend stage information in JSON format, containing the stage name, start year, end year, and a brief trend description
+    - top5_applicants_info: JSON format information about 5 important applicants' patent applications during this period, including patent number, title, abstract, country, and application year
+Please analyze in detail the technology development trends during this period and return the results.
+
+Output requirements include:
+    - Identify the technology development stage and its time range based on period_info (need to reference the period field description)
+    - Compare domestic and foreign patent technologies during this stage
+    - Compare and analyze the technical route differences among the 5 applicants
+    - Must include the corresponding relationship between specific patent solutions and performance parameters
+    - Highlight the innovation characteristics of Chinese research institutions
+
+The return format must be valid JSON:
+    {
+        "period_title": "Technology lifecycle stage name and its duration (used as title)",
+        "country_compare": "Comparison of domestic and foreign patent technologies (100-200 words)",
+        "company_compare": "Analysis of technical route differences among 5 applicants (core content 300-400 words)"
+    }
+
+Example:
+Input: 
+patent_statistics:
+'| Application Year |   CN |   US |   Global |
+|----------------:|-----:|-----:|---------:|
+|           1990 |    1 |    0 |        8 |
+|           1991 |    0 |    0 |        8 |
+|           1992 |    0 |    2 |        7 |
+|           1993 |    0 |    2 |        9 |
+|           1994 |    0 |    3 |       10 |
+|           1995 |    0 |    0 |        5 |
+|           1996 |    1 |    0 |       10 |
+|           1997 |    0 |    2 |        9 |
+|           1998 |    0 |    3 |       13 |
+|           1999 |    0 |    4 |       16 |
+|           2000 |    0 |    1 |       18 |
+|           2001 |    0 |    3 |       16 |
+|           2002 |    0 |    1 |       19 |
+|           2003 |    5 |    5 |       30 |
+|           2004 |    3 |    4 |       26 |
+|           2005 |    6 |    2 |       26 |
+|           2006 |    3 |    4 |       26 |
+|           2007 |    9 |   10 |       45 |
+|           2008 |   17 |    5 |       55 |
+|           2009 |   16 |    8 |       52 |
+|           2010 |   16 |    1 |       48 |
+|           2011 |   17 |    1 |       65 |
+|           2012 |   22 |    6 |       75 |
+...
+|           2021 |  119 |    6 |      173 |
+|           2022 |  121 |   10 |      208 |
+|           2023 |  172 |    7 |      209 |
+|           2024 |   46 |    0 |       48 |'
+period_info:
+{'period': 'Stable Growth Period', 'start_year': '1990', 'end_year': '2000', 'description': 'During this period, global patent applications increased year by year, but the growth rate was relatively slow. Chinese patent applications grew slowly, while US patent applications remained stable.'}
+top5_applicants_info：
+[{'applicant': 'Tamura Corporation | Kowa Corporation',
+  'patents': [{'publication_number': 'JP2016117643A',
+    'title': 'β-Ga2O3 Single Crystal Substrate',
+    'abstract': '[Problem] To provide a β-Ga2O3 single crystal substrate free from twin crystals by the EFG method._x000D_\n[Solution] A β-Ga2O3 single crystal substrate having a main surface parallel to the b-axis, processed from a β-Ga2O3 single crystal grown by a method capable of suppressing twin crystal formation and polycrystallization. The main surface parallel to the b-axis of the β-Ga2O3 single crystal substrate is a (101) plane, (-201) plane, or (001) plane._x000D_\n[Selected Figure] Figure 9',
+    'application_year': 2015,
+    'applicant_country': 'JP'},
+   {'publication_number': 'JP2017001907A',
+    'title': 'β-Ga2O3 Substrate, Semiconductor Stacked Structure and Semiconductor Device',
+    'abstract': '[Problem] To provide a β-Ga2O3 substrate with excellent crystal orientation not only at the center point of the main surface but also in a wider area including the center point, and a semiconductor stacked structure and semiconductor device including the β-Ga2O3 substrate._x000D_\n[Solution] A β-Ga2O3 substrate having a (-201) plane or (101) plane as the main surface 2a, where the full width at half maximum of the X-ray rocking curve of the main surface 2a obtained by irradiating X-rays from a direction whose orthographic projection onto the main surface 2a is the [010] direction in a rectangular area 51 with a width of 2.3mm in the [010] direction and a width of 10mm in the direction perpendicular to the [010] direction at the center of the main surface 2a is 100arcsec or less.',
+    'application_year': 2015,
+    'applicant_country': 'JP'},
+   {'publication_number': 'JP2016082200A',
+    'title': 'Crystal Stacked Structure, Manufacturing Method Thereof and Semiconductor Device',
+    'abstract': '[Problem] To provide a crystal stacked structure having a nitride semiconductor layer with few cracks on a Ga2O3 substrate, a manufacturing method thereof, and a semiconductor device including the crystal stacked structure._x000D_\n[Solution] A crystal stacked structure including a Ga2O3 substrate 11 with a donor concentration of 1.0×1019/cm3 or less, a buffer layer 12 formed on the Ga2O3 substrate 11 and made of a crystal having a composition represented by AlxGayN(0≦x≦1, 0≦y≦1, x+y=1), and a nitride semiconductor layer formed on the buffer layer 12 and made of a crystal having a composition represented by AlxGayInzN(0≦x≦1, 0≦y≦1, 0≦z≦1, x+y+z=1).',
+    'application_year': 2014,
+    'applicant_country': 'JP'},
+   {'publication_number': 'JP2016013933A',
+    'title': 'Undoped Semi-Insulating Ga2O3 Single Crystal Substrate and Manufacturing Method Thereof',
+    'abstract': '[Problem] To provide an undoped semi-insulating β-Ga2O3 single crystal substrate with suppressed crack formation and excellent crystallinity, and a manufacturing method thereof._x000D_\n[Solution] A method for manufacturing an undoped semi-insulating β-Ga2O3 single crystal substrate including a substrate preparation step of preparing an undoped β-Ga2O3 single crystal substrate cut out from a β-Ga2O3 single crystal grown by the EFG method, and a resistivity control step of subjecting the single crystal substrate to an annealing treatment in an oxygen-containing atmosphere to control the resistivity of the single crystal substrate to 1-2.06×105Ω·cm._x000D_\n[Selected Figure] None',
+    'application_year': 2014,
+    'applicant_country': 'JP'},
+   {'publication_number': 'JP2016013930A',
+    'title': 'Method for Manufacturing Gallium Oxide Substrate',
+    'abstract': '[Problem] To provide a method for manufacturing a gallium oxide substrate that can obtain a high-quality gallium oxide substrate by coring a gallium oxide single crystal ingot having a strong cleavage plane while suppressing damage and extracting a cylindrical block._x000D_\n[Solution] In one embodiment, a method for manufacturing a gallium oxide substrate including a step of coring a gallium oxide ingot 2 with an ultrasonically vibrating cylindrical tool 10 to obtain a cylindrical block 20 of a gallium oxide single crystal whose cross-section parallel to the radial direction is different from the (100) plane.',
+    'application_year': 2014,}
+...
+   {'publication_number': 'JP2013056804A',
+    'title': 'Method for Manufacturing β-Ga2O3 Single Crystal Film and Crystal Stacked Structure',
+    'abstract': '[Problem] To provide a method for manufacturing a β-Ga2O3 single crystal film that can form a β-Ga2O3 single crystal film with excellent conduction characteristics using a homoepitaxial growth method, and a crystal stacked structure including the β-Ga2O3 single crystal film formed by the method._x000D_\n[Solution] A method including a step of homoepitaxially growing a β-Ga2O3 crystal on a β-Ga2O3 substrate 2 or on a β-Ga2O3 crystal layer formed on the β-Ga2O3 substrate 2 by molecular beam epitaxy, and adding Sn to the β-Ga2O3 crystal at regular intervals during the growth.',
+    'application_year': 2011,
+    'applicant_country': 'JP'}]}]
+Output:
+    {
+        "period_title": "Stable Growth Period (1990-2000)",
+        "country_compare": "During the stable growth period, there were relatively few patent applications in the field of curtain airbag gas generator technology, and most were foreign applications. Japan and the United States had the most research during this stage, with Germany, France, and South Korea also having some patent applications. Foreign research during this period mainly focused on high-burning-rate, high-heat, low-hygroscopic gas-generating agent formulation technology, representing the initial exploration stage of curtain airbag gas generator structural design.",
+        "company_compare": "Morton International in the United States proposed a gas-generating agent that could be used for automatic ignition as early as the beginning of the last century, laying a good foundation for the development of efficient gas-generating agent formulation technology. In 1994, Nippon Kayaku and Kogyo Corporation in Japan also disclosed gas-generating agent formulation and preparation process technology, improving combustion reaction rates while suppressing the production of polluting components, meeting the needs of more advanced safety airbag gas generators. Subsequently, Daicel Corporation produced multiple patent achievements, successively proposing innovative solutions such as moisture-proof sealing tape to prevent gas-generating agent moisture absorption, gas-generating agent formulation to reduce particle residue generation, and gas-generating agents to reduce gas generator size and cost. While improving the combustion efficiency and gas generation efficiency of gas-generating agents, they reduced residues and controlled gas generator size and cost, effectively promoting the development of high-burning-rate, high-heat, low-hygroscopic gas-generating agent formulation technology in Japan. At the same time, Daicel Corporation, Nippon Kayaku, and Autoliv in Sweden also conducted initial exploration of curtain airbag gas generator structural design technology during this period. Daicel Corporation proposed a gas generator in patent CN1450964A that made curtain airbag inflation unaffected by environmental temperature changes. This curtain gas generator contained an inert gas pressurizing medium with a sound speed of no less than 400m/sec, enabling the curtain safety airbag to open instantly even in environments below normal temperature. Nippon Kayaku disclosed a long cylindrical gas generator design in patent JP1998329635A, achieving device miniaturization and weight reduction while reducing the structural complexity and manufacturing cost of side impact safety airbag devices. Autoliv disclosed a rope-type gas generator in patent WO2002016168A3, consisting of segmented solid fuel and igniters, providing an effective gas generator device for curtain airbags."
+    }
+
+{% else %}
+input:
+- Patent Statistics: {{patent_statistics}}
+- Trend Stage Information: {{period_info}}
+- Patent Application Information of 5 Important Applicants: {{top5_applicants_info}}
+Task: Analyze patent application trends during this period based on the given patent application statistics, trend stage information, and patent applicant information, and return the analysis results in the specified format
+Output: Must output analysis results according to the given format and cannot contain any other information, and respond in English.
+
+{% endif %}

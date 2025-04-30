@@ -1,0 +1,14 @@
+volcengine-deepseek-chat:
+  API_KEY: ###3
+  additional_parameters: &id002
+    top_k: 5
+    top_p: 0.1
+  max_tokens: 4095
+  model: ###
+  temperature: 0.1
+  url: https://ark.cn-beijing.volces.com/api/v3/chat/completions
+volcengine_base:
+  API_KEY: ###
+  additional_parameters: *id002
+  max_tokens: 4095
+  url: https://ark.cn-beijing.volces.com/api/v3/chat/completions
