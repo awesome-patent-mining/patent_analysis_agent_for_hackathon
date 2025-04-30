@@ -1,14 +1,5 @@
 # Automatic Patent Analysis Report Generation System
-<p align="center">
-   TEAM: Fuxing No.15 
-</p>
-<p align="center">
-  <strong></strong><br>
-  Liang Chen<sup>1</sup>, Ziyou Lee<sup>1</sup>, Lei Shu<sup>1</sup>, Lekang Wang<sup>2</sup>
-  <br><br>
-  <strong></strong><br>
-  <sup>1</sup>Institute of Scientific and Technical Information of China, <sup>2</sup>Shandong University of Technology
-</p>
+
 
 ## Introduction
 
